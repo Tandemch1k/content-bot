@@ -191,10 +191,17 @@ async def _publish_post(query, post: dict):
     storage.mark_published(post_id)
 
     await query.edit_message_reply_markup(reply_markup=None)
-    await query.edit_message_caption(
-        caption=query.message.caption + f"\n\n{'  |  '.join(results)}" if query.message.caption else query.message.text + f"\n\n{'  |  '.join(results)}",
-        parse_mode="Markdown",
-    )
+        try:
+        await query.edit_message_caption(
+            caption=(query.message.caption or "") + f"\n\n{'  |  '.join(results)}",
+            parse_mode="Markdown",
+        )
+    except Exception:
+        await query.edit_message_text(
+            text=(query.message.text or "") + f"\n\n{'  |  '.join(results)}",
+            parse_mode="Markdown",
+        )
+
 async def edit_text_handler(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     """Принимает новый текст поста."""
     post_id = ctx.user_data.get("editing_post_id")
