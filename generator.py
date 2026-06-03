@@ -11,7 +11,8 @@ from image_generator import get_image
 
 logger = logging.getLogger(__name__)
 
-client = anthropic.Anthropic()
+import os
+client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 CHANNEL_STYLE = """
 Ты — эксперт по недвижимости Dubai. Пишешь для русскоязычного Telegram-канала о рынке Dubai.
