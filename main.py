@@ -201,7 +201,6 @@ async def _publish_post(query, post: dict):
             text=(query.message.text or "") + f"\n\n{'  |  '.join(results)}",
             parse_mode="Markdown",
         )
-
 async def edit_text_handler(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     """Принимает новый текст поста."""
     post_id = ctx.user_data.get("editing_post_id")
